@@ -1,0 +1,156 @@
+﻿.floating-form {
+    width: 100%;
+}
+
+.floating-label {
+    position: relative;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.floating-input, .floating-select {
+    padding: 4px 4px;
+    display: block;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    border: none !important;
+    border-bottom: 1px solid #dadfe3 !important;
+}
+
+    .floating-input:focus, .floating-select:focus {
+        outline: none;
+        border-bottom: 1px solid #5264AE;
+    }
+
+.floating-label label {
+    font-weight: normal;
+    /*position: absolute;
+    pointer-events: none;*/
+    left: 0px;
+    /*top: 5px;*/
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.bgnone {
+    background: none!important
+}
+
+.bordernone {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.bgbordernone {
+    background:none;
+    border:none
+}
+
+.floating-input:focus ~ label, .floating-input:not(:placeholder-shown) ~ label {
+    top: -15px;
+    color: #a6a6a6;
+    z-index: 999;
+}
+
+.floating-select:focus ~ label, .floating-select:not([value=""]):valid ~ label {
+    top: -15px;
+    color: #a6a6a6;
+    z-index: 999;
+}
+
+/* active state */
+.floating-input:focus ~ .bar:before, .floating-input:focus ~ .bar:after, .floating-select:focus ~ .bar:before, .floating-select:focus ~ .bar:after {
+    width: 50%;
+}
+
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.floating-textarea {
+    min-height: 35px;
+    max-height: 260px;
+    overflow: hidden;
+    overflow-x: hidden;
+}
+
+/* highlighter */
+.highlight {
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    top: 15%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* active state */
+.floating-input:focus ~ .highlight, .floating-select:focus ~ .highlight {
+    -webkit-animation: inputHighlighter 0.3s ease;
+    -moz-animation: inputHighlighter 0.3s ease;
+    animation: inputHighlighter 0.3s ease;
+}
+
+/* animation */
+@-webkit-keyframes inputHighlighter {
+    from {
+        background: #5264AE;
+    }
+
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+@-moz-keyframes inputHighlighter {
+    from {
+        background: #5264AE;
+    }
+
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+@keyframes inputHighlighter {
+    from {
+        background: #5264AE;
+    }
+
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+
+.floating-credit {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+    .floating-credit a:hover {
+        border-bottom: 1px dotted #f8f8f8;
+    }
+
+
+ /*-------------------------------------------------------------------------- error massege -----------------------------------------------------------------*/
+
+.errormessage {
+    font-size: 12px;
+    margin-top: 0px;
+    margin-left: 1px;
+    color: red;
+    border-top: 1px solid red;
+    width: 100%;
+    display: block;
+}

@@ -1,0 +1,31 @@
+﻿
+
+.page-sidebar {
+    margin-left: 0px;
+    float: left;
+    height: 100%;
+    background: #fff;
+    /*overflow-y: scroll;*/
+    padding-bottom: 50px;
+}
+
+
+.force-overflow {
+    min-height: 450px;
+}
+
+
+#sidebar::-webkit-scrollbar-track {
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    background-color: #eee
+}
+
+#sidebar::-webkit-scrollbar {
+    width: 0px;
+    background-color: #f5af24;
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+    background-color: #0d62ae;
+    border: 0px solid #0d62ae;
+}

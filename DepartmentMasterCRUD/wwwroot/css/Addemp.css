@@ -1,0 +1,212 @@
+﻿ 
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.gaadiex-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.empaddnew {
+    padding: 0px !important;
+    float: right;
+}
+
+.gaadiex-list > .gaadiex-list-item {
+    padding: 0 22px;
+}
+
+.dep {
+    margin-bottom: 0px !important
+}
+
+.gaadiex-list-item-img {
+    float: left;
+    width: 45px;
+    height: 45px;   
+    margin-right: 10px;
+    border-radius: 50%;
+    background: #e1e2f1;
+    padding: 5px;
+}
+
+.gaadiex-list-item i {
+    float: left;
+    font-size: 48px;
+    width: 58px;
+    height: 58px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.username1 {
+    font-size: 15px;
+    font-weight: 600 !important;
+    margin-bottom: 5px;
+}
+
+.border-b-1 {
+    border-bottom: 1px solid rgba(162,162,162,.16);
+}
+
+.borderbottomemp {
+    border-bottom: 1px solid rgb(218, 215, 228);
+}
+
+.empheading {
+    font-weight: 500;
+    padding: 10px 20px;
+    background: #ffffff;
+    margin: 0px -15px 10px;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+    outline: none;
+}
+
+.vertical-tab {  
+    display: table;
+}
+
+    .vertical-tab .nav-tab {
+        display: table-cell;
+        width: 28%;
+        min-width: 28%;
+        vertical-align: top;
+        border: none;
+        border-right: 1px solid #e7e7e7;
+    }
+
+        .vertical-tab .nav-tab li {
+            float: none;
+            vertical-align: top;
+        }
+
+            .vertical-tab .nav-tab li a {             
+                background: #fff;              
+                text-align: center;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                padding: 10px 20px;
+                margin: 0 0 1px 0;
+                border: none;
+                transition: all 0.3s ease 0s;
+            }
+
+                .vertical-tab .nav-tab li a:hover,
+                .vertical-tab .nav-tab li.active a,
+                .vertical-tab .nav-tab li.active a:hover {
+                    color: #198df8;
+                    background: #fff;
+                    border: none;
+                }
+
+                .vertical-tab .nav-tab li a:before,
+                .vertical-tab .nav-tab li a:after {
+                    content: "\f054";
+                    color: #198df8;
+                    font-family: "Font Awesome 5 Free";
+                    font-weight: 900;
+                    font-size: 18px;
+                    opacity: 0;
+                    transform: translateY(-50%);
+                    position: absolute;
+                    top: 50%;
+                    right: -4px;
+                    z-index: 1;
+                    transition: all 0.3s ease 0.1s;
+                }
+
+                .vertical-tab .nav-tab li a:after {
+                    content: "";
+                    background: #198df8;
+                    width: 3px;
+                    height: 100%;
+                    transform: translateY(0);
+                    top: 0;
+                    right: 8px;
+                    transition: all 0.3s ease 0s;
+                }
+
+                .vertical-tab .nav-tab li a:hover:before,
+                .vertical-tab .nav-tab li.active a:before {
+                    opacity: 1;
+                    right: -17px;
+                }
+
+                .vertical-tab .nav-tab li a:hover:after,
+                .vertical-tab .nav-tab li.active a:after {
+                    opacity: 1;
+                    right: -3px;
+                }
+
+    .vertical-tab .tab-content {
+        color: #555;
+        background-color: #fff;
+        font-size: 15px;
+        letter-spacing: 1px;
+        line-height: 23px;
+        padding: 10px 15px 10px 25px;
+        display: table-cell;
+        position: relative;
+    }
+
+        .vertical-tab .tab-content h3 {
+            font-weight: 600;
+            text-transform: uppercase;
+            margin: 0 0 5px 0;
+        }
+
+@media only screen and (max-width: 479px) {
+    .vertical-tab .nav-tab {
+        display: block;
+        width: 100%;
+        border-right: none;
+    }
+
+        .vertical-tab .nav-tab li a {
+            padding: 7px 7px;
+            margin: 0 0 18px 0;
+        }
+
+            .vertical-tab .nav-tab li a:before,
+            .vertical-tab .nav-tab li a:after {
+                transform: translateY(0) translateX(50%) rotate(90deg);
+                right: 50%;
+                top: auto;
+                bottom: 0;
+            }
+
+            .vertical-tab .nav-tab li a:after {
+                width: 50%;
+                height: 3px;
+                transform: translateY(0) translateX(50%) rotate(0);
+            }
+
+            .vertical-tab .nav-tab li a:hover:before,
+            .vertical-tab .nav-tab li.active a:before {
+                bottom: -22px;
+                right: 50%;
+            }
+
+            .vertical-tab .nav-tab li a:hover:after,
+            .vertical-tab .nav-tab li.active a:after {
+                bottom: -2px;
+                right: 50%;
+            }
+
+    .vertical-tab .tab-content {
+        border-top: 3px solid #e7e7e7;
+        display: block;
+        padding: 20px 15px 10px;
+    }
+
+        .vertical-tab .tab-content h3 {
+            font-size: 18px;
+        }
+}

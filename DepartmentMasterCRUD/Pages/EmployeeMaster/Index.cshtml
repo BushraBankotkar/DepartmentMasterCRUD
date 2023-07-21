@@ -1,0 +1,104 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<p>
+    <form asp-page="/EmployeeMaster/Add" method="get">
+        <button class="btn btn-primary" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                <path d="M12 4a1 1 0 0 1 1 1v6h6a1 1 0 0 1 0 2h-6v6a1 1 0 0 1-2 0v-6H5a1 1 0 0 1 0-2h6V5a1 1 0 0 1 1-1z" />
+            </svg>
+            Create New Customer
+        </button>
+    </form>
+</p>
+@if (!string.IsNullOrEmpty(TempData["Message"] as string))
+{
+    <div class="alert alert-success alert-dismissible d-flex justify-content-between">
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        
+    </div>
+}
+@if (!string.IsNullOrEmpty(TempData["ErrMessage"] as string))
+{
+    <div class="alert alert-danger alert-dismissible d-flex justify-content-between">
+        @TempData["ErrMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+}
+<table class="table" id="employeeTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("First Name")
+            </th>
+            <th>
+                @Html.DisplayName("Last Name")
+            </th>
+            <th>
+                @Html.DisplayName("Department")
+            </th>
+            <th>
+                @Html.DisplayName("Designation")
+            </th>
+            
+            <th>Edit | Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.employeeList.Count > 0)
+        {
+            @foreach (var item in Model.employeeList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.emp_FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.emp_LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.emp_Department)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.emp_Designation)
+                    </td>
+                    <td>
+                        <a asp-page="/EmployeeMaster/Edit" asp-route-id="@item.EmployeeId">Edit</a> |
+                        <a onclick="return confirm
+                    ('Are you sure you want to delete this item?');"
+                        asp-page-handler="Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" style="text-align: center;">No employees found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#employeeTable').DataTable({
+            "paging": true, // Enable pagination
+            "lengthChange": false, // Hide page length options
+            "pageLength": 5, // Set the number of rows per page
+            "sorting": false
+        });
+    });
+</script>

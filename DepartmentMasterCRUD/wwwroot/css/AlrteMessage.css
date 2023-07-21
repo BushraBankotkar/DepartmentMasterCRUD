@@ -1,0 +1,127 @@
+﻿
+
+.toast {
+    position: fixed;
+    top: 2px;
+    right: 2px;
+    border-radius: 3px;
+    background: #fff;
+    padding: 20px 35px 20px 25px;
+    box-shadow: 0 6px 20px -5px rgb(0 0 0 / 10%);
+    overflow: hidden;
+    transform: translateX(calc(100% + 30px));
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+    z-index: 99999;
+}
+
+    .toast.active {
+        transform: translateX(0%);
+    }
+
+    .toast .toast-content {
+        display: flex;
+        align-items: center;
+    }
+
+.toast-content .check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    min-width: 35px;
+    background-color: #2BDE3F;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 50%;
+}
+.toast-content .erroricon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    min-width: 35px;
+    background-color: red;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 50%;
+}
+
+.toast-content .message {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.message .text {
+    font-weight: 400;
+}
+
+    .message .text.text-1 {
+        font-weight: 600;
+        color: #2BDE3F;
+        font-size: 15px
+    }
+
+.textred {
+    color: #ed5f5f!important
+}
+
+.toast .closebtn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    padding: 3px;
+    cursor: pointer;
+    opacity: 0.5;
+    color: #9fa6b1 !important;
+}
+
+.toast .close:hover {
+    opacity: 1;
+}
+
+.toast .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+}
+
+    .toast .progress:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #2BDE3F;
+    }
+
+.toast .bg-red:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #ed5f5f !important;
+}
+
+.progress.active:before {
+    animation: progress 5s linear forwards;
+}
+
+@keyframes progress {
+    100% {
+        right: 100%;
+    }
+}
+
+.toast.active ~ button {
+    pointer-events: none;
+}
+
+
+
+/*------------------------------------------- alrt Message --------------------------------------------*/
