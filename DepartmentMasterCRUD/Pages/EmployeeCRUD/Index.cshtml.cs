@@ -1,4 +1,6 @@
 using DepartmentMasterCRUD.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.Collections.Generic;
 
 namespace DepartmentMasterCRUD.Pages.EmployeeCRUD
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class IndexModel : PageModel
     {
         IEmployeeMasterRepository _employeeMasterRepository;
@@ -49,12 +52,12 @@ namespace DepartmentMasterCRUD.Pages.EmployeeCRUD
                     message = "Employee added successfully!";
                     messageId = 2;
                 }
-                
+
             }
-            
+
             //employeeList = _employeeMasterRepository.GetList();
-            
-            return new JsonResult(new { message = message, messageId = messageId});
+
+            return new JsonResult(new { message = message, messageId = messageId });
         }
 
         public IActionResult OnGetDelete(int id)
@@ -102,7 +105,7 @@ namespace DepartmentMasterCRUD.Pages.EmployeeCRUD
                     message = "Employee updated successfully!";
                     messageId = 2;
                 }
-                
+
             }
             else
             {
@@ -111,7 +114,14 @@ namespace DepartmentMasterCRUD.Pages.EmployeeCRUD
             //employeeList = _employeeMasterRepository.GetList();
 
             return new JsonResult(new { message = message, messageId = messageId });
-            
+
+        }
+
+        public IActionResult OnPostAsync()
+        {
+            HttpContext.Session.Clear();
+            return Redirect("/EmployeeCRUD/Index");
+
         }
 
     }

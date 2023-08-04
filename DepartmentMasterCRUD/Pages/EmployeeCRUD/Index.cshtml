@@ -1,93 +1,116 @@
 ﻿@page
 @model DepartmentMasterCRUD.Pages.EmployeeCRUD.IndexModel
+@using System.Security.Claims
 @{
 }
-<div class="page-body">
-    <div class="widget-body">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="bordered-left bordered-warning">
-                    <div class="form-title">
+@*@if (User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        You are Logged in as <span style="font-size:large;color:forestgreen;">@User.Identity.Name</span>
+        <span>Role:
+        @foreach (var claim in User.Claims)
+            {
+                if (claim.Type == ClaimTypes.Role)
+                {
+                    @claim.Value
+                    break; // Assuming there is only one role claim
+                }
+            }*@
+        </span>
+    </div>
+    <div class="row" style="padding-top:50px;">
+            <form method="post" asp-page="/EmployeeCRUD/Index" asp-page-handler="OnPostAsync" id="logoffForm">
+                @Html.AntiForgeryToken()
+                @*<a asp-page="/Index" class="btn btn-primary btn-lg rph-login-button">Log Off</a> <!-- Update here -->*@
+                <button type="submit" class="btn btn-primary btn-lg rph-login-button">Log Off</button>
+            </form>
+    </div>
+    <div class="page-body">
+        <div class="widget-body">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="bordered-left bordered-warning">
+                        <div class="form-title">
 
-                        Employee
-                        <div class="empaddnew">
-                            <a id="btnAddnewLink" href="#0" class="js-cd-panel-trigger pl-011" data-panel="main" data-toggle="tooltip" data-placement="bottom" data-original-title="Add New">
-                                <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="12" y1="8" x2="12" y2="16"></line>
-                                    <line x1="8" y1="12" x2="16" y2="12"></line>
-                                </svg>
-                            </a>
-                            <a href="#0" class="js-cd-panel-trigger pl-011" data-panel="mainhelp" data-toggle="tooltip" data-placement="bottom" data-original-title="Help">
-                                <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                </svg>
-                            </a>
+                            Employee
+                            <div class="empaddnew">
+                                <a id="btnAddnewLink" href="#0" class="js-cd-panel-trigger pl-011" data-panel="main" data-toggle="tooltip" data-placement="bottom" data-original-title="Add New">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                </a>
+                                <a href="#0" class="js-cd-panel-trigger pl-011" data-panel="mainhelp" data-toggle="tooltip" data-placement="bottom" data-original-title="Help">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
-                    </div>
 
-                    <div id="divDataList" class="row">
-                        <div class="col-lg-12 col-sm-12 col-xs-12">
-                            <div class="table-responsive mb-0">
-                                <table id="tblDataList" class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                @Html.DisplayName("First Name")
-                                            </th>
-                                            <th>
-                                                @Html.DisplayName("Last Name")
-                                            </th>
-                                            <th>
-                                                @Html.DisplayName("Department")
-                                            </th>
-                                            <th>
-                                                @Html.DisplayName("Designation")
-                                            </th>
+                        <div id="divDataList" class="row">
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <div class="table-responsive mb-0">
+                                    <table id="tblDataList" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayName("First Name")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Last Name")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Department")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Designation")
+                                                </th>
 
-                                            <th>Edit | Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (Model.employeeList.Count > 0)
-                                        {
-                                            @foreach (var item in Model.employeeList)
+                                                <th>Edit | Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.employeeList.Count > 0)
+                                            {
+                                                @foreach (var item in Model.employeeList)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.emp_FirstName)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.emp_LastName)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.emp_Department)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.emp_Designation)
+                                                        </td>
+                                                        <td>
+                                                            @*<a asp-page="/EmployeeMaster/Edit" asp-route-id="@item.EmployeeId">Edit</a> |*@
+                                                            <a id="editClick" href="javascript:void(0);" onclick="loadEmployeeData('@item.EmployeeId')"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a> |
+                                                            <a onclick="return confirm
+                    ('Are you sure you want to delete this item?');"
+                                                            asp-page-handler="Delete" asp-route-id="@item.EmployeeId"><svg viewBox="0 0 24 24" width="16" height="16" stroke="red" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points = "3 6 5 6 21 6" ></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg ></a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
                                             {
                                                 <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.emp_FirstName)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.emp_LastName)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.emp_Department)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.emp_Designation)
-                                                    </td>
-                                                    <td>
-                                                        @*<a asp-page="/EmployeeMaster/Edit" asp-route-id="@item.EmployeeId">Edit</a> |*@
-                                                        <a id="editClick" href="javascript:void(0);" onclick="loadEmployeeData('@item.EmployeeId')"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a> |
-                                                        <a onclick="return confirm
-                    ('Are you sure you want to delete this item?');"
-                                                           asp-page-handler="Delete" asp-route-id="@item.EmployeeId"><svg viewBox="0 0 24 24" width="16" height="16" stroke="red" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points = "3 6 5 6 21 6" ></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg ></a>
-                                                    </td>
+                                                    <td colspan="5" style="text-align: center;">No employees found.</td>
                                                 </tr>
                                             }
-                                        }
-                                        else
-                                        {
-                                            <tr>
-                                                <td colspan="5" style="text-align: center;">No employees found.</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                            @*<div class="col-lg-12 col-sm-12 col-xs-12">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @*<div class="col-lg-12 col-sm-12 col-xs-12">
                                 <div class="row">
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="d-flex">
@@ -113,102 +136,102 @@
                                     </div>
                                 </div>
                             </div>*@
+                            </div>
                         </div>
+
                     </div>
-                    
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-@*---------------------------- Right Side Slide ----------------------------*@
+    @*---------------------------- Right Side Slide ----------------------------*@
 
-<div id="divInfoForm" class="cd-panel cd-panel--from-right js-cd-panel-main">
-    <header class="cd-panel__header">
-        <strong><span id="spnHeaderText">Add Employee</span></strong>
-        <a href="#0" class="cd-panel__close js-cd-close">Close</a>
-    </header>
+    <div id="divInfoForm" class="cd-panel cd-panel--from-right js-cd-panel-main">
+        <header class="cd-panel__header">
+            <strong><span id="spnHeaderText">Add Employee</span></strong>
+            <a href="#0" class="cd-panel__close js-cd-close">Close</a>
+        </header>
 
-    <div class="cd-panel__container">
-        @Html.AntiForgeryToken()
-        <form id="frmDataDetail" method="post">
-            <input type="hidden" id="hdn_formId" name="hdn_formId" />
-            <input type="hidden" id="hdn_formMode" name="hdn_formMode" />
-            <div class="cd-panel__content" id="divDataDetail">
-                <div class="row">
-                    <div class="col-lg-12 col-sm-12 col-xs-12">
-                        <div class="row">
-                            <div class="col-lg-4 col-sm-12 col-xs-12">
-                                <div class="floating-label">
-                                    <label asp-for="employee.emp_FirstName"></label>
-                                    <label class="required-field"><sup>*</sup></label>
+        <div class="cd-panel__container">
+            @Html.AntiForgeryToken()
+            <form id="frmDataDetail" method="post">
+                <input type="hidden" id="hdn_formId" name="hdn_formId" />
+                <input type="hidden" id="hdn_formMode" name="hdn_formMode" />
+                <div class="cd-panel__content" id="divDataDetail">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-12 col-xs-12">
+                                    <div class="floating-label">
+                                        <label asp-for="employee.emp_FirstName"></label>
+                                        <label class="required-field"><sup>*</sup></label>
+                                    </div>
                                 </div>
+                                <div class="col-lg-8 col-sm-12 col-xs-12">
+                                    <div class="floating-label">
+                                        <input asp-for="employee.emp_FirstName" class="reqiredTextbox form-control" tabindex="1" placeholder="First Name" />
+                                        <span class="alert-danger" asp-validation-for="employee.emp_FirstName"></span>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="col-lg-8 col-sm-12 col-xs-12">
-                                <div class="floating-label">
-                                    <input asp-for="employee.emp_FirstName" class="reqiredTextbox form-control" tabindex="1" placeholder="First Name" />
-                                    <span class="alert-danger" asp-validation-for="employee.emp_FirstName"></span>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-12 col-xs-12">
+                                    <div class="floating-label">
+                                        <label asp-for="employee.emp_LastName"></label>
+                                        <label class="required-field"><sup>*</sup></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-sm-12 col-xs-12">
+                                    <div class="floating-label">
+                                        <input asp-for="employee.emp_LastName" class="reqiredTextbox form-control" tabindex="2" placeholder="Last Name" />
+                                        <span class="alert-danger" asp-validation-for="employee.emp_LastName"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-12 col-xs-12">
+                                    <div class="floating-label">
+                                        <label asp-for="employee.emp_Department"></label>
+                                        <label class="required-field"><sup>*</sup></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-sm-12 col-xs-12">
+                                    <div class="floating-label">
+                                        <input asp-for="employee.emp_Department" class="reqiredTextbox form-control" tabindex="3" placeholder="Department" />
+                                        <span class="alert-danger" asp-validation-for="employee.emp_Department"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-12 col-xs-12">
+                                    <div class="floating-label">
+                                        <label asp-for="employee.emp_Designation"></label>
+                                        <label class="required-field"><sup>*</sup></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-sm-12 col-xs-12">
+                                    <div class="floating-label">
+                                        <input asp-for="employee.emp_Designation" class="reqiredTextbox form-control" tabindex="3" placeholder="Designation" />
+                                        <span class="alert-danger" asp-validation-for="employee.emp_Designation"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-sm-12 col-xs-12">
+                                    <input type="button" class="btn btn-default" name="btnSave" id="btnSave" value="Save">
+                                    <input type="button" class="btn btn-primary js-cd-close" name="btnCancel" id="btnCancel" value="Cancel">
                                 </div>
                             </div>
 
                         </div>
-
-                        <div class="row">
-                            <div class="col-lg-4 col-sm-12 col-xs-12">
-                                <div class="floating-label">
-                                    <label asp-for="employee.emp_LastName"></label>
-                                    <label class="required-field"><sup>*</sup></label>
-                                </div>
-                            </div>
-                            <div class="col-lg-8 col-sm-12 col-xs-12">
-                                <div class="floating-label">
-                                    <input asp-for="employee.emp_LastName" class="reqiredTextbox form-control" tabindex="2" placeholder="Last Name" />
-                                    <span class="alert-danger" asp-validation-for="employee.emp_LastName"></span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4 col-sm-12 col-xs-12">
-                                <div class="floating-label">
-                                    <label asp-for="employee.emp_Department"></label>
-                                    <label class="required-field"><sup>*</sup></label>
-                                </div>
-                            </div>
-                            <div class="col-lg-8 col-sm-12 col-xs-12">
-                                <div class="floating-label">
-                                    <input asp-for="employee.emp_Department" class="reqiredTextbox form-control" tabindex="3" placeholder="Department" />
-                                    <span class="alert-danger" asp-validation-for="employee.emp_Department"></span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4 col-sm-12 col-xs-12">
-                                <div class="floating-label">
-                                    <label asp-for="employee.emp_Designation"></label>
-                                    <label class="required-field"><sup>*</sup></label>
-                                </div>
-                            </div>
-                            <div class="col-lg-8 col-sm-12 col-xs-12">
-                                <div class="floating-label">
-                                    <input asp-for="employee.emp_Designation" class="reqiredTextbox form-control" tabindex="3" placeholder="Designation" />
-                                    <span class="alert-danger" asp-validation-for="employee.emp_Designation"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-8 col-sm-12 col-xs-12">
-                                <input type="button" class="btn btn-default" name="btnSave" id="btnSave" value="Save">
-                                <input type="button" class="btn btn-primary js-cd-close" name="btnCancel" id="btnCancel" value="Cancel">
-                                </div>
-                        </div>
-
                     </div>
                 </div>
-            </div>
-            @*<div class="footer">
+                @*<div class="footer">
                 <div class="col-lg-12 col-sm-12 col-xs-12">
                     <div class="radius-bordered paddinrightbtn" style="text-align: left;">
                         <input type="button" class="btn btn-default" name="btnSave" id="btnSave" value="Save">
@@ -216,71 +239,75 @@
                     </div>
                 </div>
             </div>*@
-        </form>
-    </div>
-</div>
-
-@*------------------------------------------------------Help ------------------------------------------------*@
-
-<div class="cd-panel cd-panel--from-right js-cd-panel-mainhelp">
-    <header class="cd-panel__header">
-        <strong> Help </strong>
-        <a href="#0" class="cd-panel__close js-cd-close">Close</a>
-    </header>
-
-    <div class="cd-panel__container">
-        <div class="cd-panel__content">
-            <div class="col-lg-12 col-sm-12 col-xs-12">
-                <h4> Help </h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac semper mauris. Praesent iaculis lacus at dui tincidunt faucibus. Sed at arcu et leo faucibus sodales. Pellentesque viverra neque et tortor scelerisque, non faucibus augue egestas. Donec et viverra purus. Fusce eu malesuada eros, placerat consequat libero. Aenean et libero et sem dapibus feugiat. In ornare mattis eleifend. Donec vel tortor est. Donec fringilla pretium mauris nec convallis. Sed volutpat ultricies tincidunt
-                </p>
-                <h4> Help </h4>
-                <p>
-                    Vivamus vel posuere nisi. Donec vitae accumsan justo. Praesent vel urna condimentum, tempus elit vel, molestie libero. Nullam laoreet in est non pellentesque. In hac habitasse platea dictumst. Donec maximus ex sit amet massa ultrices luctus. Nunc pulvinar quam et tincidunt cursus. Proin turpis est, pellentesque et porttitor tempor, tincidunt eu nibh. Etiam eu est at tellus tincidunt interdum. Morbi vehicula ex sit amet dolor volutpat tempus. Fusce quis facilisis ipsum, a venenatis orci. Nulla facilisi. Nunc vulputate aliquet enim, nec dignissim lacus cursus vestibulum. Donec pulvinar eget enim ac mattis.
-                </p>
-                <h4> Help </h4>
-                <p>
-                    Vivamus vel posuere nisi. Donec vitae accumsan justo. Praesent vel urna condimentum, tempus elit vel, molestie libero. Nullam laoreet in est non pellentesque. In hac habitasse platea dictumst. Donec maximus ex sit amet massa ultrices luctus. Nunc pulvinar quam et tincidunt cursus. Proin turpis est, pellentesque et porttitor tempor, tincidunt eu nibh. Etiam eu est at tellus tincidunt interdum. Morbi vehicula ex sit amet dolor volutpat tempus. Fusce quis facilisis ipsum, a venenatis orci. Nulla facilisi. Nunc vulputate aliquet enim, nec dignissim lacus cursus vestibulum. Donec pulvinar eget enim ac mattis.
-                </p>
-            </div>
+            </form>
         </div>
-        <div class="footer">
-            <div class="col-lg-12 col-sm-12 col-xs-12">
-                @* <div class="radius-bordered paddinrightbtn" style="text-align: left;">
+    </div>
+
+    @*------------------------------------------------------Help ------------------------------------------------*@
+
+    <div class="cd-panel cd-panel--from-right js-cd-panel-mainhelp">
+        <header class="cd-panel__header">
+            <strong> Help </strong>
+            <a href="#0" class="cd-panel__close js-cd-close">Close</a>
+        </header>
+
+        <div class="cd-panel__container">
+            <div class="cd-panel__content">
+                <div class="col-lg-12 col-sm-12 col-xs-12">
+                    <h4> Help </h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac semper mauris. Praesent iaculis lacus at dui tincidunt faucibus. Sed at arcu et leo faucibus sodales. Pellentesque viverra neque et tortor scelerisque, non faucibus augue egestas. Donec et viverra purus. Fusce eu malesuada eros, placerat consequat libero. Aenean et libero et sem dapibus feugiat. In ornare mattis eleifend. Donec vel tortor est. Donec fringilla pretium mauris nec convallis. Sed volutpat ultricies tincidunt
+                    </p>
+                    <h4> Help </h4>
+                    <p>
+                        Vivamus vel posuere nisi. Donec vitae accumsan justo. Praesent vel urna condimentum, tempus elit vel, molestie libero. Nullam laoreet in est non pellentesque. In hac habitasse platea dictumst. Donec maximus ex sit amet massa ultrices luctus. Nunc pulvinar quam et tincidunt cursus. Proin turpis est, pellentesque et porttitor tempor, tincidunt eu nibh. Etiam eu est at tellus tincidunt interdum. Morbi vehicula ex sit amet dolor volutpat tempus. Fusce quis facilisis ipsum, a venenatis orci. Nulla facilisi. Nunc vulputate aliquet enim, nec dignissim lacus cursus vestibulum. Donec pulvinar eget enim ac mattis.
+                    </p>
+                    <h4> Help </h4>
+                    <p>
+                        Vivamus vel posuere nisi. Donec vitae accumsan justo. Praesent vel urna condimentum, tempus elit vel, molestie libero. Nullam laoreet in est non pellentesque. In hac habitasse platea dictumst. Donec maximus ex sit amet massa ultrices luctus. Nunc pulvinar quam et tincidunt cursus. Proin turpis est, pellentesque et porttitor tempor, tincidunt eu nibh. Etiam eu est at tellus tincidunt interdum. Morbi vehicula ex sit amet dolor volutpat tempus. Fusce quis facilisis ipsum, a venenatis orci. Nulla facilisi. Nunc vulputate aliquet enim, nec dignissim lacus cursus vestibulum. Donec pulvinar eget enim ac mattis.
+                    </p>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="col-lg-12 col-sm-12 col-xs-12">
+                    @* <div class="radius-bordered paddinrightbtn" style="text-align: left;">
                 <input type="button" class="btn btn-default" name="save" value="save">
                 </div>*@
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="toast toastSucces">
-    <div class="toast-content">
-        <i class="fas fa-solid fa-check check"></i>
-        <div class="message">
-            <span class="text text-1">Success</span>
-            <span class="spanSuccess text text-2">Your changes has been saved</span>
+    <div class="toast toastSucces">
+        <div class="toast-content">
+            <i class="fas fa-solid fa-check check"></i>
+            <div class="message">
+                <span class="text text-1">Success</span>
+                <span class="spanSuccess text text-2">Your changes has been saved</span>
+            </div>
         </div>
+        <i class="fa-solid fa-circle-xmark closebtn"> </i>
+        <div class="progress"></div>
     </div>
-    <i class="fa-solid fa-circle-xmark closebtn"> </i>
-    <div class="progress"></div>
-</div>
 
-<div class="toast toastError">
-    <div class="toast-content">
-        <i class="fa-solid fa-triangle-exclamation erroricon"></i>
-        <div class="message">
-            <span class="text text-1 textred ">Error</span>
-            <span id="spanError" class="text text-2"></span>
+    <div class="toast toastError">
+        <div class="toast-content">
+            <i class="fa-solid fa-triangle-exclamation erroricon"></i>
+            <div class="message">
+                <span class="text text-1 textred ">Error</span>
+                <span id="spanError" class="text text-2"></span>
+            </div>
         </div>
+        <i class="fa-solid fa-circle-xmark closebtn"> </i>
+        <div class="progress bg-red"></div>
     </div>
-    <i class="fa-solid fa-circle-xmark closebtn"> </i>
-    <div class="progress bg-red"></div>
-</div>
-
-
+@*}
+else
+{
+    <span>You are logged out. Please log in..</span>
+    <a asp-page="/Login/Login" class="btn btn-primary btn-lg rph-login-button">Login</a>
+}*@
 <style>
     #ajax-loader-import {
         position: fixed;
@@ -345,4 +372,3 @@
         });
     </script>
 }
-

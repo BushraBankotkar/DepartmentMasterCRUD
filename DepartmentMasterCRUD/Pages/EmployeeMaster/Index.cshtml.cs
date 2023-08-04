@@ -40,5 +40,11 @@ namespace DepartmentMasterCRUD.Pages.EmployeeMaster
             return Page();
 
         }
+
+        public IActionResult OnGetEmployee()
+        {
+            employeeList = _employeeMasterRepository.GetList();
+            return new JsonResult(employeeList);
+        }
     }
 }
